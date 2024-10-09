@@ -1,3 +1,7 @@
-res://player.gd
-res://player.tscn
 res://mob.tscn
+res://player.tscn
+res://player.gd
+res://mob.gd
+res://visible_on_screen_notifier_2d.gd
+res://main.tscn
+res://main.gd

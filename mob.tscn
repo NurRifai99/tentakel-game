@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ckf2bpccv3l3y"]
+[gd_scene load_steps=10 format=3 uid="uid://b03al82qcx3kl"]
 
 [ext_resource type="Texture2D" uid="uid://6xvk34obstsy" path="res://art/enemyFlyingAlt_1.png" id="1_c2ujv"]
 [ext_resource type="Texture2D" uid="uid://ckmruqydhmcj4" path="res://art/enemyFlyingAlt_2.png" id="2_6dl87"]
@@ -7,11 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dmcmvj5h5ujt5" path="res://art/enemyWalking_1.png" id="5_ifol4"]
 [ext_resource type="Texture2D" uid="uid://bq5kfq61gqjs5" path="res://art/enemyWalking_2.png" id="6_rkowo"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ueb85"]
-radius = 57.0
-height = 114.0
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_6a5wx"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_bu2g5"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -22,7 +18,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"fly",
-"speed": 4.0
+"speed": 3.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -33,7 +29,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"swim",
-"speed": 4.0
+"speed": 3.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -47,18 +43,44 @@ animations = [{
 "speed": 3.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_r4vdv"]
+radius = 36.0
+height = 100.0
+
+[sub_resource type="GDScript" id="GDScript_6gw2y"]
+script/source = "extends VisibleOnScreenNotifier2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+
+
+func _on_screen_exited() -> void:
+	pass # Replace with function body.
+"
+
 [node name="mob" type="RigidBody2D"]
 collision_mask = 0
 gravity_scale = 0.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_ueb85")
+metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(2.75, 0)
-scale = Vector2(0.956, 1)
-sprite_frames = SubResource("SpriteFrames_6a5wx")
-animation = &"walk"
-frame_progress = 0.254159
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_bu2g5")
+animation = &"fly"
+frame_progress = 0.700474
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_r4vdv")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+script = SubResource("GDScript_6gw2y")
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="VisibleOnScreenNotifier2D" method="_on_screen_exited"]
